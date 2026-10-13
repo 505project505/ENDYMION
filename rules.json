@@ -1,1 +1,20 @@
-
+[
+  {
+    "id": 1,
+    "priority": 1,
+    "action": {
+      "type": "modifyHeaders",
+      "requestHeaders": [
+        {
+          "header": "user-agent",
+          "operation": "set",
+          "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) discord/1.0.9188 Chrome/120.0.0.0 Electron/28.0.0 Safari/537.36"
+        }
+      ]
+    },
+    "condition": {
+      "urlFilter": "||discord.com",
+      "resourceTypes": ["xmlhttprequest", "main_frame", "sub_frame"]
+    }
+  }
+]
