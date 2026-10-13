@@ -1,1 +1,47 @@
+{
+  "manifest_version": 3,
+  "name": "𝑬𝑵𝑫𝒀𝑴𝑰𝑶𝑵",
+  "version": "1.0.4",
+  "description": "ENDYMION — customizable interface settings",
+  "minimum_chrome_version": "111",
+  "permissions": [
+    "storage",
+    "webNavigation"
+  ],
+  "host_permissions": [],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://discord.com/*"
+      ],
+      "js": [
+        "settings.js",
+        "content/content.js"
+      ],
+      "css": [
+        "content/content.css"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_title": "𝑬𝑵𝑫𝒀𝑴𝑰𝑶𝑵",
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
 
