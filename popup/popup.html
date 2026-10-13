@@ -1,1 +1,147 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>ENDYMION</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    width: 320px;
+    background: #1e1f22;
+    color: #dbdee1;
+    font-family: 'gg sans', 'Segoe UI', Roboto, sans-serif;
+    font-size: 13px;
+    padding: 14px;
+  }
+  h1 {
+    font-size: 15px; color: #fff; margin-bottom: 14px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .badge {
+    font-size: 9px; background: #5865f2; color: #fff;
+    padding: 2px 7px; border-radius: 7px;
+  }
+  .section {
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #2b2d31;
+  }
+  .section:last-of-type { border-bottom: none; }
+  .section-title {
+    font-size: 10px; color: #6d6f78;
+    text-transform: uppercase; letter-spacing: 1px;
+    margin-bottom: 8px; font-weight: 600;
+  }
+  .row {
+    display: flex; justify-content: space-between;
+    align-items: center; padding: 7px 0;
+  }
+  label { color: #b5bac1; font-size: 12px; }
+  select {
+    background: #2b2d31; color: #dbdee1;
+    border: 1px solid #3f4147; border-radius: 6px;
+    padding: 5px 8px; font-size: 12px;
+    outline: none; min-width: 150px;
+    direction: rtl; cursor: pointer;
+  }
+  select:hover { border-color: #5865f2; }
+  input[type="color"] { width: 42px; height: 27px; padding: 2px; border: 1px solid #3f4147; border-radius: 6px; background: #2b2d31; cursor: pointer; }
+  .checks { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 10px; margin-top: 8px; }
+  .checks label { display: flex; align-items: center; gap: 7px; font-size: 11px; }
+  .checks input { accent-color: #c9a961; }
+  .reset-btn { margin-top: 10px; padding: 7px 10px; width: 100%; border: 1px solid #3f4147; border-radius: 7px; color: #dbdee1; background: #2b2d31; cursor: pointer; }
+  .reset-btn:hover { border-color: #c9a961; }
+  input[type="checkbox"] {
+    width: 34px; height: 18px; appearance: none;
+    background: #4e5058; border-radius: 9px;
+    position: relative; cursor: pointer;
+    transition: background 0.2s; outline: none;
+  }
+  input[type="checkbox"]::after {
+    content: ''; position: absolute; top: 2px; right: 2px;
+    width: 14px; height: 14px; background: #fff;
+    border-radius: 50%; transition: transform 0.2s;
+  }
+  input[type="checkbox"]:checked { background: #23a55a; }
+  input[type="checkbox"]:checked::after { transform: translateX(-16px); }
+  .hint {
+    font-size: 10px; color: #6d6f78;
+    margin-top: 4px; line-height: 1.4;
+  }
+  .footer {
+    margin-top: 12px; padding-top: 10px;
+    font-size: 10px; color: #6d6f78; text-align: center;
+  }
+</style>
+</head>
+<body>
+  <h1><span>𝑬𝑵𝑫𝒀𝑴𝑰𝑶𝑵</span> <span class="badge">v1.0.4</span>
+    <select id="lang" style="min-width:0;margin-inline-start:auto;direction:ltr"><option value="ar">ع</option><option value="en">EN</option></select></h1>
 
+  <div class="section">
+    <div class="section-title" data-t="عام">عام</div>
+    <div class="row">
+      <label data-t="تفعيل الإضافة">تفعيل الإضافة</label>
+      <input type="checkbox" id="enabled">
+    </div>
+    <div class="row">
+      <label data-t="بدء تلقائي عند فتح المهام">بدء تلقائي عند فتح المهام</label>
+      <input type="checkbox" id="autoStart">
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title" data-t="ترتيب التنفيذ">ترتيب التنفيذ</div>
+    <div class="row">
+      <label data-t="يبدأ بـ">يبدأ بـ</label>
+      <select id="sortMode">
+        <option value="video_first" data-t="مهام الفيديو (الأسرع)">مهام الفيديو (الأسرع)</option>
+        <option value="play_first" data-t="مهام الألعاب">مهام الألعاب</option>
+        <option value="progress_desc" data-t="الأقرب للانتهاء">الأقرب للانتهاء</option>
+        <option value="expiry_asc" data-t="الأقرب لانتهاء الصلاحية">الأقرب لانتهاء الصلاحية</option>
+      </select>
+    </div>
+    <div class="hint" data-t="مهام الفيديو تُكمل خلال ثوانٍ في الوضع السريع.">مهام الفيديو تُكمل خلال ثوانٍ في الوضع السريع.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title" data-t="سرعة مهام الفيديو">سرعة مهام الفيديو</div>
+    <div class="row">
+      <label data-t="الوضع">الوضع</label>
+      <select id="videoSpeed">
+        <option value="turbo" data-t="⚡ خارق (فوري)">⚡ خارق (فوري)</option>
+        <option value="fast" selected data-t="🚀 سريع (×10)">🚀 سريع (×10)</option>
+        <option value="normal" data-t="🚶 عادي (×1)">🚶 عادي (×1)</option>
+      </select>
+    </div>
+    <div class="hint" id="speedHint">سريع: ينهي فيديو 30ث في ~3 ثوانٍ حقيقية.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title" data-t="تخصيص الواجهة">تخصيص الواجهة</div>
+    <div class="row"><label for="accentColor" data-t="لون التمييز">لون التمييز</label><input type="color" id="accentColor" value="#c9a961"></div>
+    <div class="row"><label for="backgroundColor" data-t="خلفية اللوحة">خلفية اللوحة</label><input type="color" id="backgroundColor" value="#0f0f10"></div>
+    <div class="row"><label for="textColor" data-t="لون النص">لون النص</label><input type="color" id="textColor" value="#e8e8ea"></div>
+    <div class="section-title" data-t="إخفاء الأزرار">إخفاء الأزرار</div>
+    <div class="checks">
+      <label><input type="checkbox" id="hideRun"> <span data-t="تشغيل">تشغيل</span></label>
+      <label><input type="checkbox" id="hideStop"> <span data-t="إيقاف">إيقاف</span></label>
+      <label><input type="checkbox" id="hideSkip"> <span data-t="تخطي">تخطي</span></label>
+      <label><input type="checkbox" id="hideRefresh"> <span data-t="تحديث">تحديث</span></label>
+      <label><input type="checkbox" id="hideReport"> <span data-t="إبلاغ">إبلاغ</span></label>
+      <label><input type="checkbox" id="hideJoin"> <span data-t="زر الانضمام">زر الانضمام</span></label>
+      <label><input type="checkbox" id="hideVerify"> <span data-t="زر التحقق">زر التحقق</span></label>
+      <label><input type="checkbox" id="hideSocial"> <span data-t="روابط التواصل">روابط التواصل</span></label>
+    </div>
+    <button id="resetUI" class="reset-btn" data-t="إعادة ضبط المظهر">إعادة ضبط المظهر</button>
+    <div class="hint" data-t="تتقلص المساحات تلقائياً عند إخفاء الأزرار.">تتقلص المساحات تلقائياً عند إخفاء الأزرار.</div>
+  </div>
+
+  <div class="footer">
+    <div style="color:#c9a961;font-size:12px;margin-bottom:4px">𝑬𝑵𝑫𝒀𝑴𝑰𝑶𝑵 v1.0.4</div>
+    <div>Discord: <b>v6ll9v1</b> · Instagram: <a href="https://instagram.com/v6ll9v1" target="_blank" style="color:#8ea1ff">v6ll9v1</a> · TikTok: <a href="https://tiktok.com/@n6w9v" target="_blank" style="color:#8ea1ff">n6w9v</a></div>
+    <div style="margin-top:4px"><a href="https://discord.gg/yYUQKpzzBy" target="_blank" style="color:#8ea1ff" data-t="سيرفر الدعم (مطلوب)">سيرفر الدعم (مطلوب)</a></div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
