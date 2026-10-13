@@ -1,1 +1,733 @@
+/* ============================================================
+   Arithius v9.3.1 — Complete CSS (touch-enabled)
+   ============================================================ */
+
+#arithius-root {
+  --gold:        var(--gold);
+  --gold-bright: var(--gold-bright);
+  --gold-dim:    #6e5b2e;
+  --bg:          #0f0f10;
+  --bg-2:        #17171a;
+  --bg-3:        #1e1e22;
+  --bg-4:        #26262c;
+  --border:      #2a2a2e;
+  --border-2:    #35353a;
+  --text:        #e8e8ea;
+  --text-2:      #a8a8b0;
+  --text-3:      #6e6e76;
+  --success:     #6abf7a;
+  --danger:      #d9564d;
+  --warn:        #d9a84d;
+
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 2147483646;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Cairo',
+               'Helvetica Neue', sans-serif;
+  direction: rtl;
+  -webkit-font-smoothing: antialiased;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+#arithius-panel {
+  width: 380px;
+  height: 660px;
+  min-width: 320px;
+  min-height: 420px;
+  max-width: min(90vw, 600px);
+  max-height: calc(100vh - 40px);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow:
+    0 1px 0 rgba(201, 169, 97, 0.06) inset,
+    0 12px 48px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(0, 0, 0, 0.5);
+  color: var(--text);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  backdrop-filter: blur(20px);
+  position: relative;
+}
+
+/* ============ COLLAPSED ============ */
+#arithius-root.arithius-collapsed #arithius-panel {
+  height: 56px !important;
+  min-height: 56px !important;
+  max-height: 56px !important;
+}
+#arithius-root.arithius-collapsed .arithius-body { display: none; }
+#arithius-root.arithius-collapsed #arithius-resize { display: none; }
+
+/* ============ HEADER (draggable) ============ */
+#arithius-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: linear-gradient(180deg, #1a1a1c 0%, #0f0f10 100%);
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  flex-shrink: 0;
+  touch-action: none;
+}
+#arithius-header.dragging { cursor: grabbing; }
+
+#arithius-header::after {
+  content: '';
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: -1px;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--gold) 40%, transparent) 30%,
+    color-mix(in srgb, var(--gold) 40%, transparent) 70%,
+    transparent 100%);
+}
+
+#arithius-logo {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+#arithius-logo:hover { transform: scale(1.1); }
+
+#arithius-title {
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--text);
+  flex: 1;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+#arithius-badge {
+  font-size: 10px;
+  color: var(--gold);
+  border: 1px solid var(--gold-dim);
+  padding: 2px 8px;
+  border-radius: 10px;
+  letter-spacing: 0.8px;
+  font-weight: 500;
+  font-family: 'SF Mono', 'Consolas', monospace;
+  pointer-events: none;
+}
+
+#arithius-toggle {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-2);
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  padding: 0;
+  flex-shrink: 0;
+}
+#arithius-toggle:hover {
+  border-color: var(--gold-dim);
+  color: var(--gold);
+  background: rgba(201, 169, 97, 0.05);
+}
+#arithius-toggle svg {
+  width: 12px;
+  height: 12px;
+  transition: transform 0.2s ease;
+}
+#arithius-root.arithius-collapsed #arithius-toggle svg { transform: rotate(180deg); }
+
+/* ============ RESIZE HANDLE ============ */
+#arithius-resize {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 32px;
+  height: 32px;
+  cursor: nesw-resize;
+  z-index: 100;
+  opacity: 0.7;
+  transition: opacity 0.15s, background 0.15s;
+  background: linear-gradient(225deg,
+    transparent 45%,
+    rgba(201, 169, 97, 0.12) 50%,
+    color-mix(in srgb, var(--gold) 30%, transparent) 100%);
+  border-bottom-left-radius: 14px;
+  touch-action: none;
+}
+#arithius-resize::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  bottom: 6px;
+  width: 12px;
+  height: 12px;
+  border-left: 2px solid var(--gold);
+  border-bottom: 2px solid var(--gold);
+  border-radius: 0 0 0 4px;
+}
+#arithius-resize::after {
+  content: '';
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  width: 6px;
+  height: 6px;
+  border-left: 1.5px solid var(--gold-dim);
+  border-bottom: 1.5px solid var(--gold-dim);
+  border-radius: 0 0 0 2px;
+}
+#arithius-resize:hover { opacity: 1; }
+
+/* ============ BODY ============ */
+.arithius-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+/* ============ ACTIONS ============ */
+#arithius-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(68px, 1fr));
+  gap: 6px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.arithius-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 9px 8px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border: 1px solid;
+  letter-spacing: 0.2px;
+}
+.arithius-action svg { width: 12px; height: 12px; }
+
+#arithius-run {
+  background: linear-gradient(180deg, var(--gold) 0%, var(--gold-dim) 100%);
+  color: #0f0f10;
+  border-color: var(--gold);
+  font-weight: 600;
+}
+#arithius-run:hover:not(:disabled) {
+  background: linear-gradient(180deg, var(--gold-bright) 0%, var(--gold) 100%);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--gold) 15%, transparent);
+}
+
+#arithius-stop {
+  background: transparent;
+  color: var(--text-2);
+  border-color: var(--border-2);
+}
+#arithius-stop:hover:not(:disabled) {
+  color: var(--danger);
+  border-color: var(--danger);
+  background: rgba(217, 86, 77, 0.08);
+}
+
+#arithius-skip,
+#arithius-refresh {
+  background: transparent;
+  color: var(--text-2);
+  border-color: var(--border-2);
+}
+#arithius-skip:hover:not(:disabled),
+#arithius-refresh:hover:not(:disabled) {
+  color: var(--gold);
+  border-color: var(--gold-dim);
+  background: color-mix(in srgb, var(--gold) 8%, transparent);
+}
+
+.arithius-action:disabled { opacity: 0.35; cursor: not-allowed; }
+
+/* ============ CONTROLS ============ */
+#arithius-controls {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.arithius-ctrl-label {
+  font-size: 10px;
+  color: var(--text-3);
+  letter-spacing: 1.2px;
+  margin-bottom: 6px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.arithius-seg {
+  display: flex;
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 2px;
+  margin-bottom: 12px;
+  gap: 2px;
+}
+.arithius-seg:last-child { margin-bottom: 0; }
+
+.arithius-seg-btn {
+  flex: 1;
+  padding: 6px 4px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  color: var(--text-3);
+  font-size: 11px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 500;
+}
+.arithius-seg-btn:hover { color: var(--text-2); }
+.arithius-seg-btn.active {
+  background: var(--bg-4);
+  color: var(--gold-bright);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  font-weight: 600;
+}
+
+/* ============ STATUS ============ */
+#arithius-status {
+  padding: 11px 14px;
+  font-size: 12px;
+  color: var(--text-2);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  flex-shrink: 0;
+}
+#arithius-status::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-3);
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+.arithius-status-info::before    { background: var(--text-3); }
+.arithius-status-success::before { background: var(--success); box-shadow: 0 0 6px rgba(106, 191, 122, 0.5); }
+.arithius-status-warn::before    { background: var(--warn); }
+.arithius-status-error::before   { background: var(--danger); }
+
+.arithius-status-success { color: var(--success); }
+.arithius-status-warn    { color: var(--warn); }
+.arithius-status-error   { color: var(--danger); }
+
+#arithius-diag {
+  padding: 6px 14px;
+  font-size: 10px;
+  color: var(--text-3);
+  border-bottom: 1px solid var(--border);
+  font-family: 'SF Mono', 'Consolas', monospace;
+  direction: ltr;
+  text-align: left;
+  letter-spacing: 0.4px;
+  flex-shrink: 0;
+}
+
+/* ============ QUEST LIST ============ */
+#arithius-list {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 8px 10px;
+  min-height: 60px;
+}
+
+.arithius-quest {
+  padding: 10px 12px;
+  border-radius: 8px;
+  margin-bottom: 4px;
+  background: var(--bg-2);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border-left: 3px solid var(--border-2);
+}
+.arithius-quest:hover {
+  background: var(--bg-3);
+  border-left-color: var(--gold-dim);
+}
+.arithius-quest:active { transform: scale(0.99); }
+
+.arithius-quest.running {
+  background: linear-gradient(90deg, color-mix(in srgb, var(--gold) 8%, transparent) 0%, var(--bg-2) 60%);
+  border-left-color: var(--gold-bright);
+}
+.arithius-quest.done { border-left-color: var(--success); opacity: 0.85; }
+.arithius-quest.failed { border-left-color: var(--danger); opacity: 0.7; }
+.arithius-quest.skipped { border-left-color: var(--text-3); opacity: 0.55; }
+
+.arithius-quest-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.arithius-quest-name {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--text);
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.arithius-quest-pct {
+  color: var(--text-3);
+  font-variant-numeric: tabular-nums;
+  font-size: 11px;
+  font-family: 'SF Mono', 'Consolas', monospace;
+  font-weight: 500;
+}
+.arithius-quest.running .arithius-quest-pct { color: var(--gold-bright); }
+.arithius-quest.done .arithius-quest-pct    { color: var(--success); }
+
+.arithius-bar {
+  height: 2px;
+  background: var(--bg-4);
+  border-radius: 1px;
+  margin-top: 8px;
+  overflow: hidden;
+}
+.arithius-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold-dim) 0%, var(--gold) 60%, var(--gold-bright) 100%);
+  border-radius: 1px;
+  transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: width;
+}
+.arithius-quest.done .arithius-bar-fill {
+  background: linear-gradient(90deg, #3e7a48 0%, #6abf7a 100%);
+}
+
+.arithius-quest-meta {
+  font-size: 10px;
+  color: var(--text-3);
+  margin-top: 6px;
+  letter-spacing: 0.5px;
+  font-family: 'SF Mono', 'Consolas', monospace;
+}
+
+.arithius-quest-status-icon {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--text-3);
+}
+.arithius-quest.running .arithius-quest-status-icon {
+  background: var(--gold-bright);
+  box-shadow: 0 0 8px var(--gold-bright);
+  animation: arithius-pulse 1.2s ease-in-out infinite;
+}
+.arithius-quest.done .arithius-quest-status-icon    { background: var(--success); }
+.arithius-quest.failed .arithius-quest-status-icon  { background: var(--danger); }
+
+@keyframes arithius-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.4; transform: scale(0.85); }
+}
+
+.arithius-empty {
+  text-align: center;
+  padding: 32px 12px;
+  color: var(--text-3);
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+
+#arithius-list::-webkit-scrollbar { width: 4px; }
+#arithius-list::-webkit-scrollbar-track { background: transparent; }
+#arithius-list::-webkit-scrollbar-thumb {
+  background: var(--border-2);
+  border-radius: 2px;
+}
+#arithius-list::-webkit-scrollbar-thumb:hover { background: var(--gold-dim); }
+
+/* ============ FOOTER ============ */
+#arithius-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 14px;
+  background: #0a0a0a;
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+  min-height: 38px;
+}
+
+.arithius-brand {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: var(--gold);
+  font-family: 'SF Mono', 'Consolas', monospace;
+  text-shadow: 0 0 8px color-mix(in srgb, var(--gold) 30%, transparent);
+}
+
+.arithius-social {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.arithius-social a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 5px;
+  color: var(--text-3);
+  transition: all 0.15s ease;
+  text-decoration: none;
+  border: 1px solid transparent;
+}
+.arithius-social a:hover {
+  color: var(--gold-bright);
+  border-color: var(--gold-dim);
+  background: color-mix(in srgb, var(--gold) 8%, transparent);
+  transform: translateY(-1px);
+}
+.arithius-social a svg {
+  width: 12px;
+  height: 12px;
+}
+
+/* أثناء السحب */
+#arithius-root.dragging * { pointer-events: none; }
+#arithius-root.dragging #arithius-header { pointer-events: auto; }
+#arithius-root.resizing * { pointer-events: none; }
+#arithius-root.resizing #arithius-resize { pointer-events: auto; }
+/* ============ MEMBERSHIP GATE (v1.0) ============ */
+#arithius-gate {
+  display: none;
+  margin: 12px 14px 0;
+  padding: 14px;
+  background: var(--bg-2);
+  border: 1px solid var(--border-2);
+  border-radius: 10px;
+  text-align: center;
+  color: var(--text-2);
+  font-size: 12px;
+  line-height: 1.7;
+  flex-shrink: 0;
+}
+#arithius-gate-msg { margin-bottom: 12px; }
+#arithius-gate-btns {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 6px;
+}
+#arithius-join,
+#arithius-verify {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 8px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border: 1px solid;
+  letter-spacing: 0.2px;
+}
+#arithius-join {
+  background: linear-gradient(180deg, var(--gold) 0%, var(--gold-dim) 100%);
+  color: #0f0f10;
+  border-color: var(--gold);
+  font-weight: 600;
+}
+#arithius-join:hover {
+  background: linear-gradient(180deg, var(--gold-bright) 0%, var(--gold) 100%);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--gold) 15%, transparent);
+}
+#arithius-verify {
+  background: transparent;
+  color: var(--text-2);
+  border-color: var(--border-2);
+}
+#arithius-verify:hover {
+  color: var(--gold);
+  border-color: var(--gold-dim);
+  background: color-mix(in srgb, var(--gold) 8%, transparent);
+}
+
+/* language switch */
+#arithius-lang {
+  background: transparent;
+  color: var(--gold);
+  border: 1px solid var(--gold-dim);
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 7px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+#arithius-lang:hover {
+  background: color-mix(in srgb, var(--gold) 10%, transparent);
+  border-color: var(--gold);
+}
+
+/* report button */
+#arithius-report {
+  background: transparent;
+  color: var(--text-2);
+  border: 1px solid var(--border-2);
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 10px;
+  padding: 2px 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+#arithius-report:hover {
+  color: var(--gold);
+  border-color: var(--gold-dim);
+  background: color-mix(in srgb, var(--gold) 8%, transparent);
+}
+
+/* ============ CONFIRM MODAL (v1.0) ============ */
+#arithius-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.62);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  animation: arithius-fade 0.15s ease;
+}
+.arithius-modal-card {
+  width: min(340px, 100%);
+  padding: 22px 20px 18px;
+  background: var(--bg-2);
+  border: 1px solid var(--gold-dim);
+  border-radius: 14px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6), 0 0 0 1px color-mix(in srgb, var(--gold) 8%, transparent);
+  text-align: center;
+  color: var(--text);
+  animation: arithius-pop 0.18s ease;
+}
+.arithius-modal-icon {
+  width: 38px; height: 38px;
+  margin: 0 auto 10px;
+  color: var(--gold);
+}
+.arithius-modal-icon svg { width: 100%; height: 100%; }
+.arithius-modal-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--gold-bright);
+  margin-bottom: 8px;
+}
+.arithius-modal-msg {
+  font-size: 12.5px;
+  line-height: 1.8;
+  color: var(--text-2);
+  margin-bottom: 16px;
+}
+.arithius-modal-btns {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 8px;
+}
+.arithius-modal-ok,
+.arithius-modal-cancel {
+  padding: 10px 8px;
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  border: 1px solid;
+  transition: all 0.15s ease;
+}
+.arithius-modal-ok {
+  background: linear-gradient(180deg, var(--gold) 0%, var(--gold-dim) 100%);
+  color: #0f0f10;
+  border-color: var(--gold);
+  font-weight: 600;
+}
+.arithius-modal-ok:hover {
+  background: linear-gradient(180deg, var(--gold-bright) 0%, var(--gold) 100%);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--gold) 15%, transparent);
+}
+.arithius-modal-cancel {
+  background: transparent;
+  color: var(--text-2);
+  border-color: var(--border-2);
+}
+.arithius-modal-cancel:hover {
+  color: var(--gold);
+  border-color: var(--gold-dim);
+  background: color-mix(in srgb, var(--gold) 8%, transparent);
+}
+@keyframes arithius-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes arithius-pop { from { opacity: 0; transform: scale(0.94); } to { opacity: 1; transform: scale(1); } }
+
+
+/* ENDYMION musical mark replacing the shield throughout the UI */
+.endymion-mark { display:inline-flex; align-items:center; justify-content:center; font-family:serif; font-size:1.25em; line-height:1; color:currentColor; font-weight:600; }
+.arithius-modal-icon .endymion-mark { font-size:28px; }
+
+
+/* ENDYMION user customization: hidden controls reflow naturally without empty slots. */
+#arithius-actions { grid-auto-flow: row; align-items: stretch; }
+#arithius-actions > button[style*="display: none"] { display: none !important; }
+#arithius-root.endymion-compact-actions #arithius-actions {
+  grid-template-columns: repeat(auto-fit, minmax(68px, 1fr));
+}
+#arithius-root #arithius-panel { color: var(--text); background: var(--bg); }
+#arithius-root #arithius-header { background: linear-gradient(180deg, var(--bg-3), var(--bg)); }
+#arithius-root #arithius-footer { background: var(--bg); }
+@media (max-width: 420px) {
+  #arithius-root { right: 8px; bottom: 8px; }
+  #arithius-panel { width: min(380px, calc(100vw - 16px)); min-width: 0; }
+  #arithius-header { gap: 7px; padding: 11px 10px; }
+  #arithius-actions, #arithius-controls { padding-inline: 10px; }
+  .arithius-action { min-width: 0; padding: 8px 5px; font-size: 11px; }
+                              }
 
